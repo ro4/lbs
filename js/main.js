@@ -1,4 +1,4 @@
-var map = new BMap.Map("menu");                        // 创建Map实例
+var map = new BMap.Map("map");                        // 创建Map实例
 map.centerAndZoom("重庆", 11);     // 初始化地图,设置中心点坐标和地图级别
 var defaultCursor = map.getDefaultCursor();
 map.enableScrollWheelZoom(true);   //鼠标滑动轮子可以滚动    
@@ -23,10 +23,12 @@ function startTool() {   //开关函数
         map.setDefaultCursor(defaultCursor); //设置默认光标
         document.getElementById("startBtn").style.background = "red";
         document.getElementById("startBtn").value = "开启选点";
-        layouts.push(points);
         drawOverlay(true, true);
+        var attr = {cate:"lawn", layer:"1"};
+        points.push(attr);
+        layouts.push(points);
         points = [];
-        document.getElementById("content").innerHTML = JSON.stringify(layouts);
+        document.getElementById("output").innerHTML = JSON.stringify(layouts);
         key = 1;
     }
 }

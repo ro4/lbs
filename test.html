@@ -1,0 +1,43 @@
+<html>
+<head>
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+    <link href="css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<style>
+  .sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  .sortable li { margin: 0 3px 3px 3px; padding: 0.4em;
+         padding-left: 1.5em; font-size: 1.4em; height: 18px; cursor: move ;}
+  .sortable li span { position: absolute; margin-left: -1.3em; }
+  .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+ </style>
+ <script>
+  $(function() {
+    $( ".sortable" ).sortable({
+	placeholder: "ui-state-highlight" , //拖动时，用css
+	cursor: "move",
+	items :"li",                        //只是li可以拖动
+	opacity: 0.6,                       //拖动时，透明度为0.6
+	revert: true,                       //释放时，增加动画
+	update : function(event, ui){       //更新排序之后
+		var text= "排序为：";
+		$(".sortable li").each(function(){
+			text = text + $(this).attr("id") + " " ;
+		})
+		alert(text);                //把排序的ID弹出
+	}
+   });
+ });
+</script>
+</head>
+<body>
+<ul class="sortable">
+  <li class="ui-state-default"  id="item-1">Item 1--from ifxoxo.com</li>
+  <li class="ui-state-default"  id="item-2" >Item 2--from ifxoxo.com</li>
+  <li class="ui-state-default"  id="item-3">Item 3--from ifxoxo.com</li>
+  <div class="ui-state-default"> Div 4 -- from <a href="ifxoxo.com">ifxoxo.com</a></div>
+</ul>
+</body>
+</html>
+

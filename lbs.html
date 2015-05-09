@@ -3,8 +3,31 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>百度map</title>
-    <link href="css/main.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+    <link href="css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+
+<script>
+  $(function() {
+    $( ".sortable" ).sortable({
+    placeholder: "ui-state-highlight" , //拖动时，用css
+    cursor: "move",
+    items :"li",                        //只是li可以拖动
+    opacity: 0.6,                       //拖动时，透明度为0.6
+    revert: true,                       //释放时，增加动画
+    update : function(event, ui){       //更新排序之后
+        var text= "排序为：";
+        $(".sortable li").each(function(){
+            text = text + $(this).attr("id") + " " ;
+        })
+        document.getElementById("info").innerHTML += Date()+":"+text;          //把排序的ID弹出
+    }
+   });
+ });
+</script>
 </head>
 <body>
 <div id="container">
@@ -12,12 +35,18 @@
 <div id="header">
 <h1>百度map</h1>
 </div>
+<div id="map"></div>
+<div id="layer">
+    <ul class="sortable">
+  <li class="ui-state-default"  id="item-1">Item 1</li>
+  <li class="ui-state-default"  id="item-2" >Item 2</li>
+  <li class="ui-state-default"  id="item-3">Item 3</li>
+    </ul>
+</div>
+<div id="output">Content goes here</div>
 
-<div id="menu"></div>
-
-<div id="content">Content goes here</div>
-
-<div id="footer"><p>
+<div id="button">
+<p>
     <input id="startBtn" type="button" onclick="startTool();" value="开始取点" />
         &nbsp;&nbsp;
     <input type="button" onclick="points.pop(); drawOverlay(true, false);" value="取消" />
@@ -25,11 +54,11 @@
     <input type="button" onclick="points = []; drawOverlay(false, false);" value="取消当前" />
      &nbsp;&nbsp;
     <input type="button" onclick="layouts = []; drawOverlay(false, false);" value="取消全部" />
-
-    </p></div>
+    </p>
+</div>
 
 </div>
-    <div id="info"></div>
+<div id="info"></div>
 </body>
 </html>
 <script type="text/javascript" src="js/main.js"></script>
