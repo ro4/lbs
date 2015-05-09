@@ -24,8 +24,9 @@ function startTool() {   //开关函数
         document.getElementById("startBtn").style.background = "red";
         document.getElementById("startBtn").value = "开启选点";
         layouts.push(points);
-        points = [];
         drawOverlay(true, true);
+        points = [];
+        document.getElementById("content").innerHTML = JSON.stringify(layouts);
         key = 1;
     }
 }
