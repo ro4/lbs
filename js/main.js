@@ -28,14 +28,26 @@ function startTool() {   //开关函数
         points.push(attr);
         layouts.push(points);
         points = [];
-        document.getElementById("output").innerHTML = JSON.stringify(layouts);
+        $(".output").html(JSON.stringify(layouts));
+        createLayer();
         key = 1;
     }
 }
 
+function createLayer(){
+    if(layouts.length == 0) return;
+    var content = "";
+    var i = 0;
+    $(".sortable").html("");
+    for(i = 0;i < layouts.length; i++){
+        content += "<li class=\"ui-state-default\" id=\""+layouts[i].length+"\">"+layouts[i].length+"</li>";
+    }
+    $(".sortable").html(content);
+}
+
 function drawOverlay(polyline, polygon) {  // 画折线和多边形
     map.clearOverlays();
-    document.getElementById("info").innerHTML = "";
+    $(".info").html("");
     if (points.length == 0) return;
     //画点
     map.addOverlay(new BMap.Marker(points[points.length - 1]));
@@ -52,7 +64,7 @@ function drawOverlay(polyline, polygon) {  // 画折线和多边形
     }
     //显示列表        
     for(var i=0; i<points.length; i++)
-        document.getElementById("info").innerHTML += "new BMap.Point(" + points[i].lng + "," + points[i].lat + "),</br>";    //输出数组里的经纬度
+        $(".info").html($(".info").html()+"new BMap.Point(" + points[i].lng + "," + points[i].lat + "),\n");   //输出数组里的经纬度
 }
 
 map.addEventListener("click", function (e) {   //单击地图，形成折线覆盖物

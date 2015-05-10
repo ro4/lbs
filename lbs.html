@@ -4,11 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>百度map</title>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
     <link href="css/main.css" rel="stylesheet" type="text/css"/>
-    <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+    <link href="css/jquery-ui.css" rel="stylesheet" />
 
 <script>
   $(function() {
@@ -23,7 +23,7 @@
         $(".sortable li").each(function(){
             text = text + $(this).attr("id") + " " ;
         })
-        document.getElementById("info").innerHTML += Date()+":"+text;          //把排序的ID弹出
+        $(".info").html($(".info").html() + Date()+":"+text+"\n");//把排序的ID弹出
     }
    });
  });
@@ -43,7 +43,7 @@
   <li class="ui-state-default"  id="item-3">Item 3</li>
     </ul>
 </div>
-<div id="output">Content goes here</div>
+<div id="output"><textarea class="output"></textarea></div>
 
 <div id="button">
 <p>
@@ -58,7 +58,9 @@
 </div>
 
 </div>
-<div id="info"></div>
+<div id="info">
+    <textarea class="info"></textarea>
+</div>
 </body>
 </html>
 <script type="text/javascript" src="js/main.js"></script>

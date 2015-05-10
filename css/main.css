@@ -9,3 +9,6 @@ div#button {background-color:#99bbbb;clear:both;text-align:center;}
 .sortable li { margin: 0 3px 3px 3px; padding: 0.4em;padding-left: 1em; font-size: 1em; height: 10px; cursor: move ;}
 .sortable li span { position: absolute; margin-left: -1.3em; }
 .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+
+.info{width: 100%; height: 250px}
+.output{width: 95%; height: 450px}
