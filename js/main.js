@@ -8,6 +8,7 @@ map.addControl(new BMap.ScaleControl());
 map.addControl(new BMap.OverviewMapControl());
 
 var key = 1;    //开关
+var count = 1;
 var points = [];    //数组，放经纬度信息
 var layouts = [];   //存放图层数组
 
@@ -20,18 +21,38 @@ function startTool() {   //开关函数
         key = 0;
     }
     else {
-        map.setDefaultCursor(defaultCursor); //设置默认光标
-        document.getElementById("startBtn").style.background = "red";
-        document.getElementById("startBtn").value = "开启选点";
-        drawOverlay(true, true);
-        var attr = {cate:"lawn", layer:"1"};
-        points.push(attr);
-        layouts.push(points);
-        points = [];
-        $(".output").html(JSON.stringify(layouts));
-        createLayer();
-        key = 1;
+        showForm();
     }
+}
+
+function showForm(){
+    $("#button").hide();
+    $("#dialog").fadeIn();
+}
+
+function showButton(){
+    $("#dialog").hide();
+    $("#button").fadeIn();
+}
+
+function saveAttr(){
+     if($("#cate").val() == "" && $("#name").val() == ""){
+        alert("请输入");
+        return;
+    }
+    map.setDefaultCursor(defaultCursor); //设置默认光标
+    document.getElementById("startBtn").style.background = "red";
+    document.getElementById("startBtn").value = "开启选点";
+    drawOverlay(true, true);
+    var attr = {cate:$("#cate").val(), name:$("#name").val(), layer:count};
+    points.push(attr);
+    layouts.push(points);
+    $(".output").html(JSON.stringify(layouts));
+    createLayer();
+    points = [];
+    count ++;
+    key = 1;
+    showButton();
 }
 
 function createLayer(){
@@ -40,7 +61,7 @@ function createLayer(){
     var i = 0;
     $(".sortable").html("");
     for(i = 0;i < layouts.length; i++){
-        content += "<li class=\"ui-state-default\" id=\""+layouts[i].length+"\">"+layouts[i].length+"</li>";
+        content += "<li class=\"ui-state-default\" id=\""+layouts[i][layouts[i].length - 1].layer+"\">"+layouts[i][layouts[i].length - 1].name+"</li>";
     }
     $(".sortable").html(content);
 }

@@ -1,11 +1,13 @@
 div#container{width:100%}
 div#header {background-color:#99bbbb;}
 div#map {background-color:#ffff99;height:500px;width:50%;float:left;}
-div#layer {background-color:#EEEEEE;height:500px;width:10%;float:left;border-style: solid; border-width: 2px;border-color: cadetblue;}
-div#output {background-color:#EEEEEE;height:500px;width:35%;float:left;border-style: solid; border-width: 2px;border-color: cadetblue;}
-div#button {background-color:#99bbbb;clear:both;text-align:center;}
+div#layer {background-color:#EEEEEE;height:500px;width:5%;float:left;border-style: solid; border-width: 2px;border-color: cadetblue;}
+div#output {background-color:#EEEEEE;height:500px;width:30%;float:left;border-style: solid; border-width: 2px;border-color: cadetblue;}
+div#dialog {background-color:#EEEEEE;height:500px;width:10%;float:left;border-style: solid; border-width: 2px;border-color: cadetblue;display: none;}
+div#button {background-color:#EEEEEE;height:500px;width:10%;float:left;border-style: solid; border-width: 2px;border-color: cadetblue;}
 
-.sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+
+.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
 .sortable li { margin: 0 3px 3px 3px; padding: 0.4em;padding-left: 1em; font-size: 1em; height: 10px; cursor: move ;}
 .sortable li span { position: absolute; margin-left: -1.3em; }
 .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
