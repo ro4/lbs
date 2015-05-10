@@ -19,11 +19,13 @@
     opacity: 0.6,                       //拖动时，透明度为0.6
     revert: true,                       //释放时，增加动画
     update : function(event, ui){       //更新排序之后
-        var text= "排序为：";
+        var myOrder = [];
+        var i = 0;
         $(".sortable li").each(function(){
-            text = text + $(this).attr("id") + " " ;
-        })
-        $(".info").html($(".info").html() + Date()+":"+text+"\n");//把排序的ID弹出
+            myOrder[i] = Number($(this).attr("id"));
+            i++;
+        });
+        passOrder(myOrder);
     }
    });
  });
@@ -45,7 +47,7 @@
     <br/>
     <input type="button" onclick="points = []; drawOverlay(false, false);" value="取消当前" />
     <br/>
-    <input type="button" onclick="layouts = []; drawOverlay(false, false);" value="取消全部" />
+    <input type="button" onclick="cancelAll()" value="取消全部" />
 </div>
 <div id="dialog">
 <form>

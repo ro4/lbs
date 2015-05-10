@@ -11,6 +11,7 @@ var key = 1;    //开关
 var count = 1;
 var points = [];    //数组，放经纬度信息
 var layouts = [];   //存放图层数组
+var myOrder = [];
 
 function startTool() {   //开关函数
     if (key == 1) {
@@ -35,6 +36,30 @@ function showButton(){
     $("#button").fadeIn();
 }
 
+function passOrder(od){
+    var i = 1;
+    var first = -1;
+    var second = -1;
+    for(i;i<od.length-1;i++){
+        if(od[i] !== i){
+            first = i;
+            break;
+        }
+    }
+    for(i = od.length-1;i>0;i--){
+        if(od[i] !== i){
+            second = i;
+            break;
+        }
+    }
+    var tem = layouts.splice(first-1,1);
+    layouts.splice(second-1,0,tem[0]);
+    for(i=0;i<layouts.length;i++){
+        layouts[i][layouts[i].length-1].layer = i + 1;
+    }
+    createLayer();
+    $(".output").html(JSON.stringify(layouts));
+}
 function saveAttr(){
      if($("#cate").val() == "" && $("#name").val() == ""){
         alert("请输入");
@@ -55,6 +80,7 @@ function saveAttr(){
     showButton();
 }
 
+
 function createLayer(){
     if(layouts.length == 0) return;
     var content = "";
@@ -66,6 +92,13 @@ function createLayer(){
     $(".sortable").html(content);
 }
 
+function cancelAll(){
+    layouts = [];
+    count = 1;
+    drawOverlay(false, false);
+    $(".output").html("");
+    $(".sortable").html("");
+}
 function drawOverlay(polyline, polygon) {  // 画折线和多边形
     map.clearOverlays();
     $(".info").html("");
