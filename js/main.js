@@ -61,7 +61,7 @@ function passOrder(od){
     $(".output").html(JSON.stringify(layouts));
 }
 function saveAttr(){
-     if($("#cate").val() == "" && $("#name").val() == ""){
+     if(($("#cate").val() == "") || ($("#name").val() == "")){
         alert("请输入");
         return;
     }
