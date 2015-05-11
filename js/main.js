@@ -69,6 +69,7 @@ function passOrder(od){
         layouts[i][layouts[i].length-1].layer = i;
     }
     createLayer();
+    drawPainter();
     $(".output").html(JSON.stringify(layouts));
 }
 
@@ -129,12 +130,16 @@ function drawPainter(){
     for(i = 0;i<layouts.length; i++){
         ctx.beginPath();
         ctx.lineWidth="2";
-        ctx.strokeStyle="red"; 
+        ctx.strokeStyle=layouts[i][layouts[i].length-1].color; 
         ctx.moveTo((layouts[i][0].lng-res.x)*myPx,(res.y-layouts[i][0].lat)*myPx);
         for(var j = 1; j<layouts[i].length - 1; j++){
             ctx.lineTo((layouts[i][j].lng-res.x)*myPx,(res.y-layouts[i][j].lat)*myPx);
         }
         ctx.stroke();
+        if(layouts[i][layouts[i].length-1].closure == '1'){
+            ctx.fillStyle=layouts[i][layouts[i].length-1].color;
+            ctx.fill();
+        }
     }
 }
 
