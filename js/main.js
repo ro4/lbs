@@ -84,7 +84,7 @@ function saveAttr(){
         drawOverlay(true, true);
     } else{
         drawOverlay(true, false);
-    }
+    };
     var attr = {cate:$("#cate").val(), name:$("#name").val(),color:$("#color").val(),closure:$("#closure").val(), layer:count};
     points.push(attr);
     layouts.push(points);
@@ -94,6 +94,7 @@ function saveAttr(){
     count ++;
     key = 1;
     showButton();
+    drawPainter()
 }
 
 
@@ -115,9 +116,56 @@ function cancelAll(){
     $(".output").html("");
     $(".sortable").html("");
 }
+
+function drawPainter(){
+    var res = procLayouts();
+    console.log(res);
+    var myPx = 500/res.longer;
+    
+    var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+    ctx.clearRect(0,0,500,500);
+
+    for(i = 0;i<layouts.length; i++){
+        ctx.beginPath();
+        ctx.lineWidth="2";
+        ctx.strokeStyle="red"; 
+        ctx.moveTo((layouts[i][0].lng-res.x)*myPx,(res.y-layouts[i][0].lat)*myPx);
+        for(var j = 1; j<layouts[i].length - 1; j++){
+            ctx.lineTo((layouts[i][j].lng-res.x)*myPx,(res.y-layouts[i][j].lat)*myPx);
+        }
+        ctx.stroke();
+    }
+}
+
+function procLayouts(){
+    var arrX = [];
+    var arrY = [];
+    var res = {x:0,y:0,longer:0};
+    var maxX = 0;
+    var minX = 0;
+    var maxY = 0;
+    var minY = 0;
+    for(i = 0;i<layouts.length; i++){
+        for(var j = 0; j<layouts[i].length - 1; j++){
+            arrX.push(layouts[i][j].lng);
+            arrY.push(layouts[i][j].lat);
+        }
+    }
+    arrX.sort();
+    arrY.sort();
+    maxX = arrX[arrX.length-1];
+    minX = arrX[0];
+    maxY = arrY[arrY.length-1];
+    minY = arrY[0];
+    res.x = minX;
+    res.y = maxY;
+    res.longer = maxX - minX > maxY - minY?maxX - minX:maxY - minY;
+    return res;
+}
+
 function drawOverlay(polyline, polygon) {  // 画折线和多边形
     map.clearOverlays();
-    $(".info").html("");
     if (points.length == 0) return;
     //画点
     map.addOverlay(new BMap.Marker(points[points.length - 1]));
@@ -132,9 +180,6 @@ function drawOverlay(polyline, polygon) {  // 画折线和多边形
         var polygon = new BMap.Polygon(points);
         map.addOverlay(polygon);            //将多边形添加到地图上
     }
-    //显示列表        
-    for(var i=0; i<points.length; i++)
-        $(".info").html($(".info").html()+"new BMap.Point(" + points[i].lng + "," + points[i].lat + "),\n");   //输出数组里的经纬度
 }
 
 map.addEventListener("click", function (e) {   //单击地图，形成折线覆盖物
