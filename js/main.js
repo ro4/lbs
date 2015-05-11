@@ -8,7 +8,7 @@ map.addControl(new BMap.ScaleControl());
 map.addControl(new BMap.OverviewMapControl());
 
 var key = 1;    //开关
-var count = 1;
+var count = 0;
 var points = [];    //数组，放经纬度信息
 var layouts = [];   //存放图层数组
 var myOrder = [];
@@ -37,29 +37,41 @@ function showButton(){
 }
 
 function passOrder(od){
-    var i = 1;
+    var i = 0;
     var first = -1;
     var second = -1;
+    var type = 0;
     for(i;i<od.length-1;i++){
         if(od[i] !== i){
             first = i;
+            if(od[i] - i == 1){
+                type = 0;
+            } else {
+                type = 1;
+            }
             break;
         }
     }
-    for(i = od.length-1;i>0;i--){
+    for(i = od.length - 1;i>0;i--){
         if(od[i] !== i){
             second = i;
             break;
         }
     }
-    var tem = layouts.splice(first-1,1);
-    layouts.splice(second-1,0,tem[0]);
+    if(!type){
+        var tem = layouts.splice(first,1);
+        layouts.splice(second,0,tem[0]);
+    } else {
+        var tem = layouts.splice(second,1);
+        layouts.splice(first,0,tem[0]);
+    }
     for(i=0;i<layouts.length;i++){
-        layouts[i][layouts[i].length-1].layer = i + 1;
+        layouts[i][layouts[i].length-1].layer = i;
     }
     createLayer();
     $(".output").html(JSON.stringify(layouts));
 }
+
 function saveAttr(){
      if(($("#cate").val() == "") || ($("#name").val() == "")){
         alert("请输入");
@@ -68,8 +80,12 @@ function saveAttr(){
     map.setDefaultCursor(defaultCursor); //设置默认光标
     document.getElementById("startBtn").style.background = "red";
     document.getElementById("startBtn").value = "开启选点";
-    drawOverlay(true, true);
-    var attr = {cate:$("#cate").val(), name:$("#name").val(), layer:count};
+    if($("#closure").val() == '1'){
+        drawOverlay(true, true);
+    } else{
+        drawOverlay(true, false);
+    }
+    var attr = {cate:$("#cate").val(), name:$("#name").val(),color:$("#color").val(),closure:$("#closure").val(), layer:count};
     points.push(attr);
     layouts.push(points);
     $(".output").html(JSON.stringify(layouts));
