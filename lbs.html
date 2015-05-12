@@ -35,11 +35,6 @@
 <div id="container">
 <div id="map">
 </div>
-<div id="layer">
-    <ul class="sortable">
-  选取后会在此显示图层
-    </ul>
-</div>
     <div id="button">
     <input id="startBtn" type="button" onclick="startTool();" value="开始取点" />
     <br/>
@@ -71,6 +66,11 @@
 <br/>
 <input type="button" onclick="saveAttr();" value="修改" />
 </form>
+</div>
+<div id="layer">
+    <ul class="sortable">
+  选取后会在此显示图层
+    </ul>
 </div>
 <div id="painter">
 <canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">

@@ -13,6 +13,9 @@ var points = [];    //数组，放经纬度信息
 var layouts = [];   //存放图层数组
 var myOrder = [];
 
+var pW = $(window).width()*0.29;
+$('#myCanvas').attr({"width":pW,"height":pW});
+
 function startTool() {   //开关函数
     if (key == 1) {
         map.setDefaultCursor("crosshair"); //设置十字光标
@@ -121,11 +124,12 @@ function cancelAll(){
 function drawPainter(){
     var res = procLayouts();
     console.log(res);
-    var myPx = 500/res.longer;
+    console.log(pW);
+    var myPx = pW/res.longer;
     
     var c=document.getElementById("myCanvas");
     var ctx=c.getContext("2d");
-    ctx.clearRect(0,0,500,500);
+    ctx.clearRect(0,0,pW,pW);
 
     for(i = 0;i<layouts.length; i++){
         ctx.beginPath();
